@@ -52,5 +52,3 @@ res.send("delete all the users");
 app.listen(3000, () => {
 console.log("listening on the prot 3000....");
 });
-
-mongodb+srv://adeshgajbhiye395:9THaEgYC4ZgFj1t1@cluster0.5rez4.mongodb.net/
