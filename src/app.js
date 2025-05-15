@@ -2,21 +2,28 @@ const express = require("express");
 
 const app = express();
 
-app.get("/users/:userID", (req, res) => {
-  // /users/:userID - its a dynamic routes means though api route itself we can able to send the data
-  // const { city } = req.query; this is the query we have send through the request with key and value pair
-  //console.log(number);
-  console.log(req.params);
-  res.send({ name: "Adesh", password: 123 });
+const connectDB = require("./config/database");
+const User = require("./Models/user");
+
+app.post("/signup", async (req, res) => {
+  // created a new instance of a user basically object
+  const user = new User({
+    firstName: "Akshay",
+    lastName: "Saini",
+    emailId: "akshaySaini@gmail.com",
+    password: "1234",
+  });
+  await user.save();
+  res.send("Data saved Successfully");
 });
 
-app.post("/users", (req, res) => {
-  res.send("data received successfully");
-});
-app.use("/", (req, res) => {
-  res.send("Base");
-});
-
-app.listen(3000, () => {
-  console.log("listening on the prot 3000....");
-});
+connectDB()
+  .then(() => {
+    console.log("database connection is established");
+    app.listen(3000, () => {
+      console.log("listening on the prot 3000....");
+    });
+  })
+  .catch(() => {
+    console.log("db is not connected");
+  });
